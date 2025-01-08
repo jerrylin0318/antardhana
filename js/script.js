@@ -66,13 +66,17 @@ function handleSubmit(event) {
     const email = formData.get('email');
     const message = formData.get('message');
     
-    // 顯示成功消息
+    // 根據語言顯示不同的成功消息
     const lang = document.documentElement.lang;
-    const successMessage = lang === 'zh' 
-        ? '感謝您的留言！我們會盡快回覆您。'
-        : 'Thank you for your message! We will get back to you soon.';
+    const successMessages = {
+        'zh-TW': '感謝您的留言！我們會盡快回覆您。',
+        'zh-CN': '感谢您的留言！我们会尽快回复您。',
+        'en': 'Thank you for your message! We will get back to you soon.',
+        'hi': 'आपके संदेश के लिए धन्यवाद! हम जल्द ही आपसे संपर्क करेंगे।',
+        'fil': 'Salamat sa iyong mensahe! Babalikan ka namin sa lalong madaling panahon.'
+    };
     
-    alert(successMessage);
+    alert(successMessages[lang] || successMessages['en']);
     form.reset();
     return false;
 }
