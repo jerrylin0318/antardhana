@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antardhana Holdings Corp.</title>
+    <meta name="description" content="Antardhana Holdings Corp. — Mga pangunahing serbisyo sa real estate sa Bonifacio Global City (B.G.C.), Pilipinas. Pamamahala ng ari-arian, kalakalan, at pagkuha ng lupa.">
+    <link rel="canonical" href="https://antardhana.com/tl/">
+    <title>Antardhana Holdings Corp. | Mga Serbisyo sa Real Estate sa B.G.C.</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" role="navigation" aria-label="Pangunahing nabigasyon">
         <div class="container">
-            <a class="navbar-brand" href="#">Antardhana Holdings Corp.</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand" href="../tl/index.html">Antardhana Holdings Corp.</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="I-toggle ang nabigasyon">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -21,10 +23,10 @@
                     <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="../about-tl.html">Tungkol sa Amin</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#services" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#services" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Mga Serbisyo
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
                             <li><a class="dropdown-item" href="../services/tl/property-management.html">Pamamahala ng Ari-arian</a></li>
                             <li><a class="dropdown-item" href="../services/tl/property-trading.html">Kalakalan ng Ari-arian</a></li>
                             <li><a class="dropdown-item" href="../services/tl/land-trading.html">Kalakalan ng Lupa</a></li>
@@ -33,10 +35,10 @@
                     <li class="nav-item"><a class="nav-link" href="../contact-tl.html">Makipag-ugnayan</a></li>
                 </ul>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-globe"></i> Tagalog
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Pumili ng wika">
+                        <i class="fas fa-globe" aria-hidden="true"></i> Tagalog
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
                         <li><a class="dropdown-item" href="../index.html">English</a></li>
                         <li><a class="dropdown-item" href="../zh-tw/index.html">繁體中文</a></li>
                         <li><a class="dropdown-item" href="../zh-cn/index.html">简体中文</a></li>
@@ -73,36 +75,39 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-5">
+    <section id="services" class="py-5 services-bg">
         <div class="container">
             <h2 class="text-center mb-5">Mga Serbisyo</h2>
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3>Pamamahala ng Ari-arian</h3>
-                            <p>Nagbibigay ng komprehensibong serbisyo sa pamamahala ng ari-arian upang matiyak ang pinakamahusay na pangangalaga at pagpapanatili ng inyong pamumuhunan.</p>
-                            <a href="../services/tl/property-management.html" class="btn btn-primary">Matuto pa</a>
+                    <a href="../services/tl/property-management.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 hover-shadow">
+                            <div class="card-body">
+                                <h3>Pamamahala ng Ari-arian</h3>
+                                <p>Nagbibigay ng komprehensibong serbisyo sa pamamahala ng ari-arian upang matiyak ang pinakamahusay na pangangalaga at pagpapanatili ng inyong pamumuhunan.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3>Kalakalan ng Ari-arian</h3>
-                            <p>Nagbibigay ng komprehensibong serbisyo sa pagbili, pagbebenta, at pag-upa ng ari-arian upang makalikha ng pinakamataas na halaga para sa aming mga kliyente.</p>
-                            <a href="../services/tl/property-trading.html" class="btn btn-primary">Matuto pa</a>
+                    <a href="../services/tl/property-trading.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 hover-shadow">
+                            <div class="card-body">
+                                <h3>Kalakalan ng Ari-arian</h3>
+                                <p>Nagbibigay ng komprehensibong serbisyo sa pagbili, pagbebenta, at pag-upa ng ari-arian upang makalikha ng pinakamataas na halaga para sa aming mga kliyente.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3>Pagbebenta ng Lupa</h3>
-                            <p>Nagbibigay ng propesyonal na serbisyo sa kalakalan ng lupa, tumutulong sa mga kliyente na makahanap ng pinakamahusay na oportunidad sa pamumuhunan sa lupa.</p>
-                            <a href="../services/tl/land-trading.html" class="btn btn-primary">Matuto pa</a>
+                    <a href="../services/tl/land-trading.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 hover-shadow">
+                            <div class="card-body">
+                                <h3>Pagbebenta ng Lupa</h3>
+                                <p>Nagbibigay ng propesyonal na serbisyo sa kalakalan ng lupa, tumutulong sa mga kliyente na makahanap ng pinakamahusay na oportunidad sa pamumuhunan sa lupa.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -111,7 +116,7 @@
     <!-- Footer -->
     <footer class="py-4 bg-dark text-white">
         <div class="container text-center">
-            <p>© 2024 Antardhana Holdings Corp. Nakalaan ang Lahat ng Karapatan.</p>
+            <p>&copy; 2025 Antardhana Holdings Corp. Nakalaan ang Lahat ng Karapatan.</p>
         </div>
     </footer>
 
@@ -119,4 +124,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/script.js"></script>
 </body>
-</html> 
+</html>

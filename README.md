@@ -1,76 +1,62 @@
 # Antardhana Holdings Corp. Website
 
-這是 Antardhana Holdings Corp. 的公司形象網站，使用 HTML、CSS 和 JavaScript 開發的靜態網站。
+Static corporate website for Antardhana Holdings Corp., a real estate services company based in Bonifacio Global City (B.G.C.), Philippines.
 
-## 功能特點
+## Features
 
-- 響應式設計
-- 中英文雙語支持
-- Google Maps 整合
-- 聯繫表單
-- 現代化 UI/UX
+- Responsive design (Bootstrap 5)
+- Multi-language support: English, 繁體中文, 简体中文, हिंदी, Tagalog
+- Modern UI/UX with smooth animations
+- SEO optimized with meta descriptions and canonical URLs
 
-## 目錄結構
+## Directory Structure
 
 ```
 .
-├── index.html          # 中文版首頁
-├── en/                 # 英文版目錄
-│   └── index.html     # 英文版首頁
-├── css/               # CSS 文件
-│   └── styles.css     # 主要樣式文件
-└── js/                # JavaScript 文件
-    └── script.js      # 主要腳本文件
+├── index.html                  # English homepage
+├── about.html                  # About page (EN)
+├── contact.html                # Contact page (EN)
+├── about-{lang}.html           # About pages (zh-tw, zh-cn, hi, tl)
+├── contact-{lang}.html         # Contact pages (zh-tw, zh-cn, hi, tl)
+├── zh-tw/index.html            # Traditional Chinese homepage
+├── zh-cn/index.html            # Simplified Chinese homepage
+├── hi/index.html               # Hindi homepage
+├── tl/index.html               # Tagalog homepage
+├── services/                   # Service pages (EN)
+│   ├── property-management.html
+│   ├── property-trading.html
+│   ├── land-trading.html
+│   └── {lang}/                 # Translated service pages
+├── css/styles.css              # Main stylesheet
+├── js/script.js                # Main script
+└── CNAME                       # Custom domain config
 ```
 
-## 部署到 GitHub Pages
+## Deployment
 
-1. 創建新的 GitHub 倉庫
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git push -u origin main
-```
+This site is deployed via GitHub Pages at [antardhana.com](https://antardhana.com).
 
-2. 在 GitHub 倉庫設置中啟用 GitHub Pages：
-   - 進入倉庫設置
-   - 找到 "Pages" 部分
-   - 在 "Source" 下選擇 "main" 分支
-   - 點擊 "Save"
+### Deploy to GitHub Pages
 
-3. 等待幾分鐘後，你的網站將在以下地址可用：
-```
-https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/
-```
+1. Push to the `main` branch
+2. In repository Settings → Pages, select "main" branch as the source
+3. The site will be available at the custom domain configured in `CNAME`
 
-## 本地開發
-
-要在本地預覽網站，你可以使用任何靜態文件服務器，例如：
+### Local Development
 
 ```bash
-# 使用 Python 的簡單 HTTP 服務器
+# Preview locally with any static file server
 python -m http.server 8000
 ```
 
-然後在瀏覽器中訪問：`http://localhost:8000`
+Then visit: `http://localhost:8000`
 
-## 自定義
+## Languages
 
-1. Google Maps API
-   - 在 Google Cloud Console 獲取 API 密鑰
-   - 在 HTML 文件中替換 `YOUR_GOOGLE_MAPS_API_KEY`
-
-2. 聯繫表單
-   - 目前表單提交只會顯示成功消息
-   - 要啟用實際的表單提交功能，你需要：
-     - 設置郵件服務
-     - 或使用第三方表單服務（如 Formspree）
-
-## 注意事項
-
-- 請確保更新 Google Maps API 密鑰
-- 在生產環境中部署時，建議使用 CDN 來提供靜態資源
-- 考慮添加 SSL 證書以啟用 HTTPS 
+| Language | Code | Homepage |
+|----------|------|----------|
+| English | en | `/index.html` |
+| 繁體中文 | zh-tw | `/zh-tw/index.html` |
+| 简体中文 | zh-cn | `/zh-cn/index.html` |
+| हिंदी | hi | `/hi/index.html` |
+| Tagalog | tl | `/tl/index.html` |
