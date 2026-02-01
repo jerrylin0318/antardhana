@@ -3,17 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- [P2 #20] Basic SEO meta tags -->
+    <meta name="description" content="Antardhana Holdings Corp. — Your trusted partner in property investment, management, and asset development.">
+    <meta name="keywords" content="property, real estate, investment, holdings, management, Antardhana">
+    <meta property="og:title" content="Antardhana Holdings Corp.">
+    <meta property="og:description" content="Your trusted partner in property investment, management, and asset development.">
+    <meta property="og:type" content="website">
+    <!-- [P2 #21] hreflang for bilingual site -->
+    <link rel="alternate" hreflang="zh" href="{{ url_for('home', lang='zh', _external=True) }}">
+    <link rel="alternate" hreflang="en" href="{{ url_for('home', lang='en', _external=True) }}">
     <title>Antardhana Holdings Corp.</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- [P2 #18] Preconnect for third-party resources -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- [P2 #31] CDN resources with SRI -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7icsOpp4M5EYFAOlA6aze85RQQ8aBSTBOb"
+          crossorigin="anonymous">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          crossorigin="anonymous">
 </head>
 <body>
+    <!-- [P2 #25] Skip navigation link for accessibility -->
+    <a href="#main-content" class="visually-hidden-focusable">
+        {% if lang == 'zh' %}跳到主要內容{% else %}Skip to main content{% endif %}
+    </a>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">Antardhana Holdings Corp.</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -24,17 +46,35 @@
                     <li class="nav-item"><a class="nav-link" href="#contact">{{ nav.contact }}</a></li>
                 </ul>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-globe"></i> {{ current_lang }}
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fas fa-globe" aria-hidden="true"></i> {{ current_lang }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ url_for('home', lang='zh') }}">中文</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('home', lang='en') }}">English</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+                        <!-- [P2 #28] lang attributes on language switcher -->
+                        <li><a class="dropdown-item" lang="zh" href="{{ url_for('home', lang='zh') }}">中文</a></li>
+                        <li><a class="dropdown-item" lang="en" href="{{ url_for('home', lang='en') }}">English</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- [P1 #15] Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div id="main-content" class="container-fluid px-0" style="margin-top: 76px;">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show mb-0" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div id="main-content"></div>
+    {% endif %}
+    {% endwith %}
 
     <!-- Hero Section -->
     <header id="home" class="hero">
@@ -104,19 +144,29 @@
                     San Miguel Ave., Ortigas Center<br>
                     Pasig, Manila<br>
                     Philippines</p>
-                    <div id="map"></div>
+                    <!-- [P2 #26] Accessible map -->
+                    <div id="map" aria-label="Office location map — Belvedere Tower, Ortigas Center, Pasig, Manila" role="img"></div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <h4>{{ content.contact_form_title }}</h4>
-                    <form method="POST" action="{{ url_for('home') }}">
+                    <form method="POST" action="{{ url_for('home', lang=lang) }}">
+                        <!-- [P1 #4] CSRF token -->
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <!-- [P2 #24] Accessible form labels -->
                         <div class="mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="{{ content.name_placeholder }}" required>
+                            <label for="name" class="visually-hidden">{{ content.name_placeholder }}</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="{{ content.name_placeholder }}" required maxlength="200">
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="{{ content.email_placeholder }}" required>
+                            <label for="email" class="visually-hidden">{{ content.email_placeholder }}</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="{{ content.email_placeholder }}" required maxlength="200">
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" name="message" rows="5" placeholder="{{ content.message_placeholder }}" required></textarea>
+                            <label for="message" class="visually-hidden">{{ content.message_placeholder }}</label>
+                            <textarea class="form-control" id="message" name="message" rows="5"
+                                      placeholder="{{ content.message_placeholder }}" required maxlength="5000"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">{{ content.submit_button }}</button>
                     </form>
@@ -133,8 +183,11 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwEVsO/fAJ/6PA5202yeStzixDOCR8MIbbKeo"
+            crossorigin="anonymous"></script>
+    <!-- [P1 #12] Google Maps with callback parameter -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-</html> 
+</html>

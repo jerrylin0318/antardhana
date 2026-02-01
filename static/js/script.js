@@ -48,35 +48,16 @@ function initMap() {
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
     });
 });
 
-// Form validation and submission
-const contactForm = document.querySelector('#contact form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Basic form validation
-        const name = this.querySelector('input[name="name"]').value;
-        const email = this.querySelector('input[name="email"]').value;
-        const message = this.querySelector('textarea[name="message"]').value;
-
-        if (!name || !email || !message) {
-            alert('Please fill in all fields');
-            return;
-        }
-
-        // Here you would typically send the form data to your server
-        // For now, we'll just show a success message
-        alert('Thank you for your message. We will get back to you soon!');
-        this.reset();
-    });
-}
+// [P0 #10] Removed form preventDefault() that was blocking server-side submission.
+// The form now submits normally to Flask, which handles validation and flash messages.
 
 // Navbar background change on scroll
 window.addEventListener('scroll', function() {
@@ -85,4 +66,15 @@ window.addEventListener('scroll', function() {
     } else {
         document.querySelector('.navbar').classList.remove('bg-dark');
     }
-}); 
+});
+
+// Auto-dismiss flash messages after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert-dismissible');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+            bsAlert.close();
+        }, 5000);
+    });
+});

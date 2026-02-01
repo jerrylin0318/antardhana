@@ -1,7 +1,29 @@
+import os
+import re
+import logging
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'
+
+# [P0 #1] Secret key from environment variable, with secure fallback
+app.secret_key = os.environ.get('SECRET_KEY') or os.urandom(24)
+
+# [P1 #4] CSRF protection
+from flask_wtf.csrf import CSRFProtect
+csrf = CSRFProtect(app)
+
+# Configure logging for contact form submissions
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# [P1 #7] Security headers
+@app.after_request
+def set_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    return response
 
 # 語言內容
 CONTENT = {
@@ -31,7 +53,9 @@ CONTENT = {
             'email_placeholder': '您的電子郵件',
             'message_placeholder': '您的訊息',
             'submit_button': '發送訊息',
-            'footer_text': '© 2024 Antardhana Holdings Corp. 版權所有。'
+            'footer_text': '© 2024 Antardhana Holdings Corp. 版權所有。',
+            'flash_success': '感謝您的留言！我們會盡快回覆您。',
+            'flash_error': '請正確填寫所有欄位。',
         }
     },
     'en': {
@@ -60,10 +84,16 @@ CONTENT = {
             'email_placeholder': 'Your Email',
             'message_placeholder': 'Your Message',
             'submit_button': 'Send Message',
-            'footer_text': '© 2024 Antardhana Holdings Corp. All rights reserved.'
+            'footer_text': '© 2024 Antardhana Holdings Corp. All rights reserved.',
+            'flash_success': 'Thank you for your message! We will get back to you soon.',
+            'flash_error': 'Please fill in all fields correctly.',
         }
     }
 }
+
+# Simple email validation pattern
+EMAIL_RE = re.compile(r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -71,22 +101,39 @@ def home():
     lang = request.args.get('lang', 'zh')
     if lang not in CONTENT:
         lang = 'zh'
-    
+
     if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        message = request.form.get('message')
-        
-        # 根據語言顯示不同的成功消息
-        success_message = '感謝您的留言！我們會盡快回覆您。' if lang == 'zh' else 'Thank you for your message! We will get back to you soon.'
-        flash(success_message, 'success')
+        name = (request.form.get('name') or '').strip()
+        email = (request.form.get('email') or '').strip()
+        message = (request.form.get('message') or '').strip()
+
+        # [P1 #5] Server-side input validation
+        if not name or not email or not message:
+            flash(CONTENT[lang]['content']['flash_error'], 'danger')
+            return redirect(url_for('home', lang=lang))
+
+        if len(name) > 200 or len(email) > 200 or len(message) > 5000:
+            flash(CONTENT[lang]['content']['flash_error'], 'danger')
+            return redirect(url_for('home', lang=lang))
+
+        if not EMAIL_RE.match(email):
+            flash(CONTENT[lang]['content']['flash_error'], 'danger')
+            return redirect(url_for('home', lang=lang))
+
+        # [P1 #11] Log the submission (placeholder for email/DB integration)
+        logger.info('Contact form submission: name=%s, email=%s, message_length=%d',
+                     name, email, len(message))
+
+        flash(CONTENT[lang]['content']['flash_success'], 'success')
         return redirect(url_for('home', lang=lang))
-    
+
     return render_template('index.html',
                          lang=lang,
                          current_lang='中文' if lang == 'zh' else 'English',
                          nav=CONTENT[lang]['nav'],
                          content=CONTENT[lang]['content'])
 
+
 if __name__ == '__main__':
-    app.run(debug=True) 
+    # [P0 #2] Debug mode controlled by environment variable
+    app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true')

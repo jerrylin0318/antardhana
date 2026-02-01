@@ -165,4 +165,10 @@ h2:after {
     section {
         padding: 60px 0;
     }
+
+    /* [P3 #17] Fix background-attachment on mobile (iOS/Android perf issue) */
+    .hero,
+    .services-bg {
+        background-attachment: scroll;
+    }
 } 
